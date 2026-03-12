@@ -1,0 +1,10 @@
+{
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "./main.js"
+  },
+  "dependencies": {
+    "octokit": "^5.0.5"
+  }
+}
