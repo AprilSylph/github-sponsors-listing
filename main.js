@@ -56,9 +56,10 @@ try {
     }
   `);
 
-  await fs.writeFile('./index.json', JSON.stringify(viewer, null, 2));
+  await fs.mkdir('./out', { recursive: true });
+  await fs.writeFile('./out/index.json', JSON.stringify(viewer, null, 2));
 
-  console.log('✅ Sponsors listing data saved to ./index.json');
+  console.log('✅ Sponsors listing data saved to ./out/index.json');
   process.exit(0);
 } catch (error) {
   console.error('❌ Could not fetch sponsors listing data!');

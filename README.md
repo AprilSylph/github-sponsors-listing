@@ -8,43 +8,39 @@ A GitHub Actions cron job which publishes your GitHub Sponsors listing API data 
 
 1. Fork this repository
 2. Enable Actions in your fork:
-    - Settings &rarr; "Code and automation" &rarr; Actions &rarr; General
+    - Go to your fork's **Settings** &rarr; **Code and automation** &rarr; **Actions** &rarr; **General**
     - Select "Allow all actions and reusable workflows"
     - Click "Save"
 3. Generate a Personal Access Token:
-    - https://github.com/settings/tokens &rarr; "Generate new token" &rarr; "Generate new token (classic)"
+    - Go to your account's [**Personal access tokens**](https://github.com/settings/tokens)
+    - Click "Generate new token" &rarr; "Generate new token (classic)"
     - Set "Note" to "github-sponsors-listing"
     - Set "Expiration" to "No expiration"
-    - Set "Scopes" to `read:user`
+    - For "Scopes", select "read:user"
     - Click "Generate token"
 4. Add the Personal Access Token as a secret in your fork:
-    - Settings &rarr; Security &rarr; "Secrets and variables" &rarr; Actions &rarr; "New repository secret"
+    - Go to your fork's **Settings** &rarr; **Security** &rarr; **Secrets and variables** &rarr; **Actions**
+    - Click "New repository secret"
     - Set "Name" to `PERSONAL_ACCESS_TOKEN`
     - Set "Secret" to the token you obtained in the previous step
-5. Ensure that your fork has a `gh-pages` branch:
-    - Code &rarr; Branches
-    - If you don't see a `gh-pages` branch, create it via "New branch"
+    - Click "Add secret"
+5. Configure GitHub Pages in your fork:
+    - Go to your fork's **Settings** &rarr; **Code and automation** &rarr; **Pages**
+    - Set "Source" to "GitHub Actions"
 
-### Testing
+### First deploy
 
-Now is a good time to test that the Action can actually fetch your GitHub Sponsors listing.
+- In your fork, go to **Actions** &rarr; **GitHub Pages**
+- Click "Run workflow" &rarr; "Run workflow"
+- Wait for the _Build_ and _Deploy_ jobs to run...
+- All done! A link to your published GitHub Pages site should appear in the action summary.
 
-Perform a test run in your fork via Actions &rarr; Main &rarr; "Run workflow" &rarr; "Run workflow".
+Be sure to visit the published GitHub Pages site to see what data is available there.
 
-If it succeeds, you should see your GitHub Sponsors listing output in the `gh-pages` branch as `index.json`.
+### Scheduled updates
 
-If anything goes wrong, make sure you have followed the setup guide correctly, and try again.
+Assuming the first deploy went well, there's nothing else you need to do.
 
-### Publishing
+The published data will be refreshed every 24 hours automatically.
 
-1. Publish your `gh-pages` branch to GitHub Pages:
-    - Settings &rarr; "Code and automation" &rarr; Pages
-    - Set "Source" to "Deploy from a branch"
-    - Set "Branch" to `gh-pages`
-    - Click "Save"
-2. Wait for GitHub Pages to deploy...
-3. Done! Your GitHub Sponsors listing data is now published on the deployed site.
-
-### Maintenance
-
-If everything is set up correctly, the published data will be refreshed every 24 hours automatically.
+To unpublish the data, go to your fork's **Settings** &rarr; **Pages** and click "Unpublish site".

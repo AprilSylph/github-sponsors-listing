@@ -1,29 +1,22 @@
-name: Main
+name: GitHub Pages
 
 on:
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
 
-permissions:
-  contents: write
-
 jobs:
-  run:
-    name: Run
+  build:
+    name: Build
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     env:
       NODE_ENV: production
       PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
     steps:
-      - name: Checkout branch gh-pages
+      - name: Checkout
         uses: actions/checkout@v6
-        with:
-          ref: gh-pages
-          fetch-depth: 0
-
-      - name: Hard-reset to origin/main
-        run: git reset --hard origin/main
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v6
@@ -31,17 +24,27 @@ jobs:
           node-version: 'lts/*'
           cache: 'npm'
 
-      - name: Fetch GitHub Sponsors listing
+      - name: Build
         run: |
           npm ci
           npm start
 
-      - name: Commit changes
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add --force ./index.json
-          git commit --message "Update GitHub Sponsors listing"
-
-      - name: Push changes
-        run: git push --force
+      - name: Upload
+        id: upload-pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out/
+  deploy:
+    name: Deploy
+    permissions:
+      pages: write
+      id-token: write
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy-pages.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages site
+        id: deploy-pages
+        uses: actions/deploy-pages@v4
