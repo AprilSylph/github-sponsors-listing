@@ -42,8 +42,8 @@ If anything goes wrong, make sure you have followed the setup guide correctly, a
     - Set "Source" to "Deploy from a branch"
     - Set "Branch" to `gh-pages`
     - Click "Save"
-2. Wait for GitHub Pages to deploy
-3. Done! Your GitHub Sponsors listing is now published on the deployed site as `/index.json`.
+2. Wait for GitHub Pages to deploy...
+3. Done! Your GitHub Sponsors listing data is now published on the deployed site.
 
 ### Maintenance
 
