@@ -16,18 +16,13 @@ jobs:
       NODE_ENV: production
       PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
     steps:
-      - name: Checkout
+      - name: Checkout branch gh-pages
         uses: actions/checkout@v6
         with:
           ref: gh-pages
           fetch-depth: 0
 
-      - name: Configure git
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Reset to main
+      - name: Hard-reset to origin/main
         run: git reset --hard origin/main
 
       - name: Setup Node.js environment
@@ -36,16 +31,17 @@ jobs:
           node-version: 'lts/*'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Fetch sponsors listing data
-        run: npm start
+      - name: Fetch GitHub Sponsors listing
+        run: |
+          npm ci
+          npm start
 
       - name: Commit changes
         run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add --force ./index.json
-          git commit -m "Add sponsors listing data"
+          git commit --message "Update GitHub Sponsors listing"
 
       - name: Push changes
         run: git push --force
