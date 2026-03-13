@@ -16,8 +16,6 @@ try {
   const { viewer } = await octokit.graphql(`
     query {
       viewer {
-        login
-        name
         sponsorsListing {
           activeGoal {
             description
@@ -26,7 +24,32 @@ try {
             targetValue
             title
           }
+          featuredItems (featureableTypes: [REPOSITORY]) {
+            featureable {
+              ... on Repository {
+                description
+                languages (first: 1) {
+                  nodes {
+                    color
+                    name
+                  }
+                }
+                nameWithOwner
+                stargazerCount
+                url
+              }
+            }
+          }
           shortDescription
+          sponsorable {
+            ... on User {
+              avatarUrl
+              location
+              login
+              name
+              url
+            }
+          }
           url
         }
       }
