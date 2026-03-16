@@ -1,7 +1,13 @@
 # GitHub Sponsors Listing
 
-A GitHub Actions cron job which publishes your GitHub Sponsors listing API data
-to GitHub Pages.
+A tool for publishing your GitHub Sponsors listing in JSON format.
+
+- Leverages the GitHub GraphQL API to fetch listing data
+- Uses GitHub Actions to publish this data to GitHub Pages
+- Refreshes the published data every 24 hours
+
+**Example use case**: Display your current sponsorship goal in your own web
+application!
 
 ## How to use
 
