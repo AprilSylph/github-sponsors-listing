@@ -10,7 +10,7 @@ jobs:
     name: Build
     permissions:
       contents: read
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     env:
       NODE_ENV: production
       PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
@@ -30,7 +30,6 @@ jobs:
           npm start
 
       - name: Upload
-        id: upload-pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: out/
@@ -40,7 +39,7 @@ jobs:
       pages: write
       id-token: write
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     environment:
       name: github-pages
       url: ${{ steps.deploy-pages.outputs.page_url }}
