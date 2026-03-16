@@ -24,8 +24,11 @@ jobs:
           deno-version: lts
           cache: true
 
+      - name: Install
+        run: deno install
+
       - name: Build
-        run: deno --allow-env --allow-net --allow-write ./main.js
+        run: deno --allow-env --allow-read --allow-net --allow-write ./main.ts
 
       - name: Upload
         uses: actions/upload-pages-artifact@v3
