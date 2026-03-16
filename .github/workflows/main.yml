@@ -18,16 +18,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v6
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
         with:
-          node-version: 'lts/*'
-          cache: 'npm'
+          deno-version: lts
+          cache: true
 
       - name: Build
-        run: |
-          npm ci
-          npm start
+        run: deno --allow-env --allow-net --allow-write ./main.js
 
       - name: Upload
         uses: actions/upload-pages-artifact@v3

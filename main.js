@@ -1,13 +1,12 @@
-#!/usr/bin/env node
+#!/usr/bin/env deno
 
-import fs from 'node:fs/promises';
 import { Octokit } from 'octokit';
 
-const { PERSONAL_ACCESS_TOKEN } = process.env;
+const PERSONAL_ACCESS_TOKEN = Deno.env.get('PERSONAL_ACCESS_TOKEN');
 
 if (!PERSONAL_ACCESS_TOKEN) {
   console.error('❌ PERSONAL_ACCESS_TOKEN environment variable is not set!');
-  process.exit(1);
+  Deno.exit(1);
 }
 
 try {
@@ -56,13 +55,13 @@ try {
     }
   `);
 
-  await fs.mkdir('./out', { recursive: true });
-  await fs.writeFile('./out/index.json', JSON.stringify(viewer, null, 2));
+  await Deno.mkdir('./out', { recursive: true });
+  await Deno.writeTextFile('./out/index.json', JSON.stringify(viewer, null, 2));
 
   console.log('✅ Sponsors listing data saved to ./out/index.json');
-  process.exit(0);
+  Deno.exit(0);
 } catch (error) {
-  console.error('❌ Could not fetch sponsors listing data!');
+  console.error('❌ Something went wrong:');
   console.error(error);
-  process.exit(1);
+  Deno.exit(1);
 }
