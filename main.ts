@@ -1,7 +1,7 @@
 #!/usr/bin/env deno
 
-import { Octokit } from 'octokit';
-import { validate, type User } from '@octokit/graphql-schema';
+import { Octokit } from "octokit";
+import { type User, validate } from "@octokit/graphql-schema";
 
 const query = `{
   viewer {
@@ -46,14 +46,14 @@ const query = `{
 
 const errors = validate(query);
 if (errors.length) {
-  console.error('❌ GraphQL query validation failed!');
-  errors.forEach(error => console.error(error.toString()));
+  console.error("❌ GraphQL query validation failed!");
+  errors.forEach((error) => console.error(error.toString()));
   Deno.exit(1);
 }
 
-const PERSONAL_ACCESS_TOKEN = Deno.env.get('PERSONAL_ACCESS_TOKEN');
+const PERSONAL_ACCESS_TOKEN = Deno.env.get("PERSONAL_ACCESS_TOKEN");
 if (!PERSONAL_ACCESS_TOKEN) {
-  console.error('❌ PERSONAL_ACCESS_TOKEN environment variable is not set!');
+  console.error("❌ PERSONAL_ACCESS_TOKEN environment variable is not set!");
   Deno.exit(1);
 }
 
@@ -61,13 +61,13 @@ try {
   const octokit = new Octokit({ auth: PERSONAL_ACCESS_TOKEN });
   const { viewer } = await octokit.graphql<{ viewer: User }>(query);
 
-  await Deno.mkdir('./out', { recursive: true });
-  await Deno.writeTextFile('./out/index.json', JSON.stringify(viewer, null, 2));
+  await Deno.mkdir("./out", { recursive: true });
+  await Deno.writeTextFile("./out/index.json", JSON.stringify(viewer, null, 2));
 
-  console.log('✅ Sponsors listing data saved to ./out/index.json');
+  console.log("✅ Sponsors listing data saved to ./out/index.json");
   Deno.exit(0);
 } catch (error) {
-  console.error('❌ Something went wrong:');
+  console.error("❌ Something went wrong:");
   console.error(error);
   Deno.exit(1);
 }
