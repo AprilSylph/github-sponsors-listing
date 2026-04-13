@@ -30,7 +30,7 @@ jobs:
         run: deno --allow-env --allow-read --allow-net --allow-write ./main.ts
 
       - name: Upload
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: out/
   deploy:
